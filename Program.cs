@@ -5,17 +5,31 @@ namespace MCC_SamuelYusa_1
 {
     class Program
     {
-        static void TambahData()
+        static void KeMenu()
         {
+            Console.WriteLine("Tekan Enter untuk kembali ke Menu\n");
 
+            while (Console.ReadKey().Key != ConsoleKey.Enter)
+            {
+            }
+            Console.Clear();
         }
+
+
+
         static void Main(string[] args)
         {
             bool endApp = false;
 
             int MenuInput;
             string[,] DataKaryawan = new string[5, 3];
-            DataKaryawan = new string[,] { { "Sam", "MT", "Utility" }, { "Yusa", "Manager", "General Affairs" } };
+            DataKaryawan = new string[,] { { "Nama", "Jabatan", "Department" },
+                { "Sam", "MT", "Utility" },
+                { "Yusa", "Manager", "General Affairs" },
+                {null,null,null },
+                {null,null,null },
+                {null,null,null },
+            };
 
 
             while (!endApp)
@@ -33,32 +47,67 @@ namespace MCC_SamuelYusa_1
 
                 if (MenuInput == 1)
                 {
-                    Console.WriteLine("Aplikasi Data Karyawan\r");
-                    Console.WriteLine("--Tambah Data Karyawan Baru--\n");
-                    Console.Write("Nama : ");
-                    string NamaKaryawanBaru = Console.ReadLine();
-                    Console.Write("Jabatan : ");
-                    string JabatanKaryawanBaru = Console.ReadLine();
-                    Console.Write("Department : ");
-                    string DepartmentKaryawanBaru = Console.ReadLine();
-                    Console.WriteLine("\n");
+                    bool TambahData = false;
+                    int slotData = 0;
 
-                    Console.Write("Apakah data yang anda masukkan sudah benar (y/n) ");
-
-                    if (Console.ReadKey().Key == ConsoleKey.Y)
+                    for (int DataArray = 0; DataArray <= 5; DataArray++)
                     {
-                        Console.Clear();
-                       
-                        DataKaryawan = new string[,] { { NamaKaryawanBaru, JabatanKaryawanBaru, DepartmentKaryawanBaru } };
-
-                        Console.WriteLine("\nData Karyawan Baru Telah Disimpan!");
-                        Console.WriteLine("\n");
+                        if (DataKaryawan[DataArray, 0] == null)
+                        {
+                            slotData++;
+                        }
+                    }
+                    if (slotData !=0)
+                    {
+                        TambahData = true;
                     }
                     else
                     {
                         Console.Clear();
-                        return;
+                        Console.WriteLine("\n Penyimpanan Data Karyawan Penuh!");
+                        KeMenu();
                     }
+
+                    while (TambahData)
+                    {
+                        Console.WriteLine("Aplikasi Data Karyawan\r");
+                        Console.WriteLine("--Tambah Data Karyawan Baru--\n");
+                        Console.Write("Nama : ");
+                        string NamaKaryawanBaru = Console.ReadLine();
+                        Console.Write("Jabatan : ");
+                        string JabatanKaryawanBaru = Console.ReadLine();
+                        Console.Write("Department : ");
+                        string DepartmentKaryawanBaru = Console.ReadLine();
+                        Console.WriteLine("\n");
+
+                        Console.Write("Apakah data yang anda masukkan sudah benar (y/n) ");
+
+                        if (Console.ReadKey().Key == ConsoleKey.Y)
+                        {
+                            Console.WriteLine("\n");
+                            Console.WriteLine("============================================\n");
+
+                            for (int DataArray = 0; DataArray <= 5; DataArray++)
+                            {
+                                if(DataKaryawan[DataArray,0] == null)
+                                {
+                                    DataKaryawan[DataArray, 0] = NamaKaryawanBaru;
+                                    DataKaryawan[DataArray, 1] = JabatanKaryawanBaru;
+                                    DataKaryawan[DataArray, 2] = DepartmentKaryawanBaru;
+                                    DataArray = 6;
+                                }
+                            }
+
+                            Console.WriteLine("\nData Karyawan Baru Telah Disimpan!");
+                            KeMenu();
+                            TambahData = false;
+                        }
+                        else
+                        {
+                            Console.Clear();
+                        }
+                    }
+                    
                 }
                 else if (MenuInput == 2)
                 {
@@ -75,13 +124,12 @@ namespace MCC_SamuelYusa_1
                         Console.WriteLine();
                     }
 
-                    Console.WriteLine("\n");
+                    KeMenu();
 
                 }
                 else if (MenuInput == 3)
                 {
                     endApp = true;
-                    Console.WriteLine("\n");
                 }
                 else
                 {
